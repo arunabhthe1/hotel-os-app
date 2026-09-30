@@ -17,6 +17,26 @@ API: `http://localhost:8080`
 
 Override with `DB_URL`, `DB_USERNAME`, `DB_PASSWORD`, and `JWT_SECRET`.
 
+## Docker Compose
+
+Needs the sibling checkout `../hotel-os`. First start can take a few minutes (npm + Maven inside the image).
+
+```bash
+cp .env.example .env
+docker compose up --build
+```
+
+Open `http://localhost:8080`. MySQL is on `localhost:3306`. Schema is applied on the first empty volume; demo users come from the app seeder.
+
+```bash
+docker compose down          # stop
+docker compose down -v       # stop and wipe the database volume
+```
+
+## Cloud Run
+
+See [docs/gcp-cloud-run.md](./docs/gcp-cloud-run.md) for the combined UI+API Cloud Run image, GCP resources, and `infra/gcp-setup.sh`.
+
 Optional customer Google login: set `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET`. Redirect URI:
 
 `http://localhost:8080/api/auth/custlogin/oauth2/code/google`

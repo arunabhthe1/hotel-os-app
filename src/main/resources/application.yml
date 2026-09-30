@@ -1,5 +1,6 @@
 server:
-  port: ${SERVER_PORT:8080}
+  port: ${PORT:${SERVER_PORT:8080}}
+  forward-headers-strategy: framework
 
 spring:
   application:
@@ -30,10 +31,21 @@ hotel:
     secret: ${JWT_SECRET:change-me-to-a-long-random-hotel-os-jwt-signing-secret-key}
     expiration-ms: ${JWT_EXPIRATION_MS:86400000}
   oauth2:
+    use-request-origin: ${OAUTH2_USE_REQUEST_ORIGIN:false}
     frontend-redirect-url: ${OAUTH2_FRONTEND_REDIRECT:http://localhost:5173/login}
     google:
-      client-id: 
-      client-secret: 
+      client-id: ${GOOGLE_CLIENT_ID:}
+      client-secret: ${GOOGLE_CLIENT_SECRET:}
   razorpay:
-    key-id: 
-    key-secret: 
+    key-id: ${RAZORPAY_KEY_ID:}
+    key-secret: ${RAZORPAY_KEY_SECRET:}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      probes:
+        enabled: true 

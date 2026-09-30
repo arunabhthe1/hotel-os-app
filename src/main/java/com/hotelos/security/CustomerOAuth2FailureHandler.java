@@ -35,7 +35,7 @@ public class CustomerOAuth2FailureHandler implements AuthenticationFailureHandle
             session.invalidate();
         }
 
-        response.sendRedirect(UriComponentsBuilder.fromUriString(oauth2Properties.frontendRedirectUrl())
+        response.sendRedirect(UriComponentsBuilder.fromUriString(oauth2Properties.resolveFrontendRedirectUrl(request))
                 .queryParam("error", "oauth2_login_failed")
                 .encode(StandardCharsets.UTF_8)
                 .build()
