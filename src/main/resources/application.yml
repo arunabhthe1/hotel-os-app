@@ -10,9 +10,9 @@ spring:
     serialization:
       write-dates-as-timestamps: false
   datasource:
-    url: ${DB_URL:jdbc:mysql://localhost:3306/hotel_os?useSSL=false&allowPublicKeyRetrieval=true&characterEncoding=utf8&connectionCollation=utf8mb4_0900_ai_ci&serverTimezone=UTC}
-    username: ${DB_USERNAME:root}
-    password: ${DB_PASSWORD:root123#}
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/hotel_os}
+    username: ${DB_USERNAME:hotel_os}
+    password: ${DB_PASSWORD:hotel_os}
   jpa:
     open-in-view: false
     hibernate:

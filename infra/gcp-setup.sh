@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Run in Google Cloud Shell (or any machine with gcloud + mysql client).
+# Run in Google Cloud Shell (or any machine with gcloud + psql).
 # Fill the variables, then: bash infra/gcp-setup.sh
 set -euo pipefail
 
@@ -8,7 +8,7 @@ REGION="${REGION:-asia-south1}"
 GITHUB_ORG="${GITHUB_ORG:?set GITHUB_ORG (user or org that owns the GitHub repos)}"
 GITHUB_API_REPO="${GITHUB_API_REPO:-hotel-os-app}"
 ARTIFACT_REPO="${ARTIFACT_REPO:-hotel-os}"
-SQL_INSTANCE="${SQL_INSTANCE:-hotel-os-mysql}"
+SQL_INSTANCE="${SQL_INSTANCE:-hotel-os-pg}"
 DB_NAME="${DB_NAME:-hotel_os}"
 DB_USERNAME="${DB_USERNAME:-hotel_os}"
 DB_TIER="${DB_TIER:-db-f1-micro}"
@@ -100,11 +100,11 @@ gcloud iam service-accounts add-iam-policy-binding "$DEPLOY_SA" \
   --role="roles/iam.workloadIdentityUser" \
   --member="principalSet://iam.googleapis.com/${POOL_RESOURCE}/attribute.repository/${GITHUB_ORG}/${GITHUB_API_REPO}"
 
-echo "==> Cloud SQL MySQL"
+echo "==> Cloud SQL PostgreSQL"
 gcloud sql instances describe "$SQL_INSTANCE" --project "$PROJECT_ID" >/dev/null 2>&1 || \
 gcloud sql instances create "$SQL_INSTANCE" \
   --project "$PROJECT_ID" \
-  --database-version=MYSQL_8_0 \
+  --database-version=POSTGRES_15 \
   --tier="$DB_TIER" \
   --region="$REGION" \
   --storage-size=10GB \

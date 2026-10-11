@@ -34,7 +34,7 @@ bash infra/gcp-setup.sh
 3. Load schema when Cloud SQL is `RUNNABLE`:
 
 ```bash
-gcloud sql connect hotel-os-mysql --user=hotel_os --database=hotel_os --project="$PROJECT_ID" < db/schema.sql
+gcloud sql connect hotel-os-pg --user=hotel_os --database=hotel_os --project="$PROJECT_ID" < db/schema.sql
 ```
 
 ## GitHub (`hotel-os-app`)
@@ -56,7 +56,7 @@ gcloud sql connect hotel-os-mysql --user=hotel_os --database=hotel_os --project=
 | `GCP_PROJECT_ID` | `your-gcp-project` |
 | `GCP_REGION` | `asia-south1` |
 | `ARTIFACT_REPO` | `hotel-os` |
-| `CLOUDSQL_CONNECTION_NAME` | `PROJECT_ID:asia-south1:hotel-os-mysql` |
+| `CLOUDSQL_CONNECTION_NAME` | `PROJECT_ID:asia-south1:hotel-os-pg` |
 | `DB_NAME` | `hotel_os` |
 | `DB_USERNAME` | `hotel_os` |
 | `CLOUD_RUN_RUNTIME_SA` | `hotel-os-runtime@PROJECT_ID.iam.gserviceaccount.com` |

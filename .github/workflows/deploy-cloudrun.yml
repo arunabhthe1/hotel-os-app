@@ -66,7 +66,7 @@ jobs:
 
       - name: Deploy Cloud Run
         run: |
-          DB_URL="jdbc:mysql://google/${{ vars.DB_NAME }}?socketFactory=com.google.cloud.sql.mysql.SocketFactory&cloudSqlInstance=${{ vars.CLOUDSQL_CONNECTION_NAME }}&unixSocketPath=/cloudsql/${{ vars.CLOUDSQL_CONNECTION_NAME }}&characterEncoding=utf8&connectionCollation=utf8mb4_0900_ai_ci&serverTimezone=UTC"
+          DB_URL="jdbc:postgresql://google/${{ vars.DB_NAME }}?socketFactory=com.google.cloud.sql.postgres.SocketFactory&cloudSqlInstance=${{ vars.CLOUDSQL_CONNECTION_NAME }}"
 
           gcloud run deploy "$SERVICE" \
             --project "${{ vars.GCP_PROJECT_ID }}" \
