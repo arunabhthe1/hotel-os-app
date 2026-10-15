@@ -9,13 +9,33 @@ Customer login supports email/password JWT and optional Google OAuth2. Manager a
 ## Run
 
 ```bash
-mysql -u root -p < db/schema.sql
+psql -U hotel_os -d hotel_os -f db/schema.sql
 mvn spring-boot:run
 ```
 
 API: `http://localhost:8080`
 
 Override with `DB_URL`, `DB_USERNAME`, `DB_PASSWORD`, and `JWT_SECRET`.
+
+## Docker Compose
+
+Needs the sibling checkout `../hotel-os`. First start can take a few minutes (npm + Maven inside the image).
+
+```bash
+cp .env.example .env
+docker compose up --build
+```
+
+Open `http://localhost:8080`. PostgreSQL is on `localhost:5432`. Schema is applied on the first empty volume; demo users come from the app seeder.
+
+```bash
+docker compose down          # stop
+docker compose down -v       # stop and wipe the database volume
+```
+
+## Cloud Run
+
+See [docs/deploy-summary.md](./docs/deploy-summary.md) for what changed and the local / GCP / GitHub steps. Detail: [docs/gcp-cloud-run.md](./docs/gcp-cloud-run.md).
 
 Optional customer Google login: set `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET`. Redirect URI:
 

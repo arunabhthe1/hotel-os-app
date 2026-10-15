@@ -8,3 +8,4 @@ target/
 .factorypath
 *.log
 .env
+frontend/

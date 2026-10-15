@@ -45,31 +45,27 @@ public class CustomerOAuth2SuccessHandler implements AuthenticationSuccessHandle
                     oauth2User.getAttribute("name")
             );
             clearSession(request);
-            response.sendRedirect(successRedirect(login.token()));
+            response.sendRedirect(successRedirect(request, login.token()));
         } catch (ApiException ex) {
             clearSession(request);
-            response.sendRedirect(errorRedirect(ex.getMessage()));
+            response.sendRedirect(errorRedirect(request, ex.getMessage()));
         }
     }
 
-    private String successRedirect(String token) {
-        return UriComponentsBuilder.fromUriString(frontendRedirectUrl())
+    private String successRedirect(HttpServletRequest request, String token) {
+        return UriComponentsBuilder.fromUriString(oauth2Properties.resolveFrontendRedirectUrl(request))
                 .queryParam("token", token)
                 .encode(StandardCharsets.UTF_8)
                 .build()
                 .toUriString();
     }
 
-    private String errorRedirect(String message) {
-        return UriComponentsBuilder.fromUriString(frontendRedirectUrl())
+    private String errorRedirect(HttpServletRequest request, String message) {
+        return UriComponentsBuilder.fromUriString(oauth2Properties.resolveFrontendRedirectUrl(request))
                 .queryParam("error", message)
                 .encode(StandardCharsets.UTF_8)
                 .build()
                 .toUriString();
-    }
-
-    private String frontendRedirectUrl() {
-        return oauth2Properties.frontendRedirectUrl();
     }
 
     private static void clearSession(HttpServletRequest request) {
